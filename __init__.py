@@ -6,6 +6,7 @@ Annotation operators.
 |
 """
 import json
+import logging
 import os
 import sys
 
@@ -87,11 +88,25 @@ class RequestAnnotations(foo.Operator):
         kwargs = {k: v for k, v in kwargs.items() if v not in (None, [])}
 
         target_view = _get_target_view(ctx, target)
-        target_view.annotate(
-            anno_key,
-            label_schema=label_schema,
-            backend=backend,
-            **kwargs,
+        try:
+            target_view.annotate(
+                anno_key,
+                label_schema=label_schema,
+                backend=backend,
+                **kwargs,
+            )
+        except Exception as e:
+            logging.critical(e.args[0])
+
+        logging.critical(
+            json.dumps(
+                {
+                    'anno_key': anno_key,
+                    'label_schema': label_schema,
+                    'backend': backend,
+                    **kwargs
+                }
+            )
         )
 
     def resolve_output(self, ctx):
