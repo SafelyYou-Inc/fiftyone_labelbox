@@ -1,0 +1,4 @@
+# FiftyOne Teams
+https://${FIFTYONE_PYPI_TOKEN}@pypi.fiftyone.ai/packages/fiftyone-2.1.1-py3-none-any.whl
+
+labelbox==5.1.0
